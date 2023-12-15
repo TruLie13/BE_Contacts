@@ -9,14 +9,14 @@ const errorHandler = (err, req, res, next) => {
   switch (statusCode) {
     case constants.VALIDATION_ERROR:
       res.json({
-        title: "Not Found",
+        title: "Validation Failed",
         message: errorMessage,
         stackTrace: stackTrace,
       });
       break;
     case constants.NOT_FOUND:
       res.json({
-        title: "Validation Failed",
+        title: "Not Found",
         message: errorMessage,
         stackTrace: stackTrace,
       });

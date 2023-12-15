@@ -1,5 +1,5 @@
 const asyncHandler = require("express-async-handler");
-const Contact = require("../models/contactModelJS");
+const Contact = require("../models/contactModel.js");
 const { isValidObjectId } = require("mongoose");
 
 const checkIsIdValidObject = (req, res) => {
