@@ -2,7 +2,6 @@ const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/userModel.js");
-const { json } = require("express");
 
 const userController = {
   //@desc Register a user
@@ -15,8 +14,8 @@ const userController = {
       throw new Error("All fields are required");
       return;
     }
-    const userAvilable = await User.findOne({ email });
-    if (userAvilable) {
+    const userEmailRegistered = await User.findOne({ email });
+    if (userEmailRegistered) {
       res.status(400);
       throw new Error("User already registered");
     }
@@ -28,7 +27,6 @@ const userController = {
       email,
       password: hashedPassword,
     });
-    console.log("user: ", user);
     if (user) {
       res.status(201).json({ _id: user.id, email: user.email });
     } else {
@@ -50,7 +48,7 @@ const userController = {
       throw new Error("All fields are mandatory");
     }
     const user = await User.findOne({ email });
-    //compare passwrod with hashed password
+    //compare password with hashed password
     if (user && (await bcrypt.compare(password, user.password))) {
       const accessToken = jwt.sign(
         {
