@@ -75,5 +75,29 @@ const userController = {
   currentUser: asyncHandler(async (req, res) => {
     res.json(req.user);
   }),
+
+  //@desc Delete user
+  //@route DELETE api/users/:id
+  //@access private
+  deleteUser: asyncHandler(async (req, res) => {
+    const authenticatedUserId = req.user.id;
+    const userIdToDelete = req.params.id;
+
+    // Ensure that the authenticated user matches the user to be deleted
+    if (authenticatedUserId !== userIdToDelete) {
+      res.status(403);
+      throw new Error("You do not have permission to delete this user");
+    }
+
+    // Find the user by ID and delete
+    const findUserIdandDelete = await User.findByIdAndDelete(userIdToDelete);
+    if (!findUserIdandDelete) {
+      res.status(404).json({ message: "User not found" });
+      return;
+    }
+
+    res.status(200).json({ message: "User deleted successfully" });
+  }),
 };
+
 module.exports = userController;
