@@ -2,7 +2,7 @@ This repo is used to demonstarte my ability to create Account Funcitonality (Reg
 
 For this demo I used:
 - bcrypt
-- MangoDB
+- MongoDB
 - Mongoose
 - Express
 - Node.js
